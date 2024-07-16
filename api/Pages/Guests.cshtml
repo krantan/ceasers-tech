@@ -1,0 +1,31 @@
+﻿@page "/Guests"
+@model GuestsModel
+@{
+    var AccountId = ViewData["AccountId"]?.ToString() ?? "";
+}
+@using MediatR
+@using api.Business.Queries
+@inject IMediator Mediator
+
+<a href="/Guest/new" class="btn btn-primary">Add Guest</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Date of Birth</th>
+      <th scope="col">Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var guest in GuestsModel.guests) {
+        <tr>
+            <td><a href="/guest/edit/@guest.Id">@guest.Id</a></td>
+            <td>@guest.NameGiven @guest.NameFamily</td>
+            <td>@guest.BirthDate</td>
+            <td>@guest.Email</td>
+        </tr>
+    }
+  </tbody>
+</table>

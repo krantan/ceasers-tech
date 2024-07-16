@@ -1,0 +1,76 @@
+﻿@page "/Guest/edit/{Id}"
+@model GuestEditModel
+
+<p>#@GuestEditModel.guest.Id</p>
+
+<form class="form-horizontal json-form form-confirm" method="post" action="/api/guest/delete" data-confirm="Confirm Delete Id #@GuestEditModel.guest.Id" data-finish="/guests">
+    <input type="hidden" name="Id" value="@GuestEditModel.guest.Id" />
+    <button type="submit" class="btn btn-primary">Remove Guest</button>
+</form>
+
+
+<div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+  <div class="d-flex">
+    <div class="toast-body"></div>
+    <button type="button" class="btn btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
+
+<div class="col-sm-6">
+<form class="form-horizontal json-form" method="post" action="/api/guest/update" data-finish="/guests">
+    <input type="hidden" name="Id" value="@GuestEditModel.guest.Id" />
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="first">First Name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="first" name="NameGiven" value="@GuestEditModel.guest.NameGiven" placeholder="Enter First Name" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="last">Last Name:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="last" name="NameFamily" value="@GuestEditModel.guest.NameFamily" placeholder="Enter Last Name" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="email">Email:</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" name="Email" value="@GuestEditModel.guest.Email" placeholder="Enter Email" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="address">Address:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="address" name="Address" value="@GuestEditModel.guest.Address" placeholder="Enter Address" required>
+        </div>
+        <label class="control-label col-sm-2" for="city">Address:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="city" name="City" value="@GuestEditModel.guest.City" placeholder="Enter Address" required>
+        </div>
+        <label class="control-label col-sm-2" for="state">Address:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="state" name="State" value="@GuestEditModel.guest.State" placeholder="Enter Address" required>
+        </div>
+        <label class="control-label col-sm-2" for="zip">Address:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="zip" name="Zip" value="@GuestEditModel.guest.Zip" placeholder="Enter Address" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="phone">Phone:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" name="Phone" value="@GuestEditModel.guest.Phone" placeholder="Enter Phone" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="dob">Date of Birth:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="dob" name="BirthDate" value="@GuestEditModel.guest.BirthDate" placeholder="Enter BirthDate" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" class="btn btn-primary" value="Update Guest" />
+        </div>
+    </div>
+</form>
+</div>
