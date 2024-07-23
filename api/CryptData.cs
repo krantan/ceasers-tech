@@ -9,9 +9,9 @@ namespace api
         {
             get
             {
-                const string envVarName = "APP_SK";
+                const string envVarName = "APP_ENCRYPTION_SECRET_KEY";
 
-                var envKeyValue = Environment.GetEnvironmentVariable(envVarName) ?? "d8e8fca2dc0f896fd7cb4cb0031ba249";
+                var envKeyValue = Environment.GetEnvironmentVariable(envVarName);
 
                 if (string.IsNullOrEmpty(envKeyValue))
                 {
@@ -116,7 +116,7 @@ namespace api
             const int iterations = 350000;
             HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
 
-            var hashed = Rfc2898DeriveBytes.Pbkdf2(Convert.FromBase64String(payload), Convert.FromBase64String(salt), iterations, hashAlgorithm, keySize);
+            var hashed = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(payload), Convert.FromBase64String(salt), iterations, hashAlgorithm, keySize);
             return Convert.ToBase64String(hashed);
         }
 

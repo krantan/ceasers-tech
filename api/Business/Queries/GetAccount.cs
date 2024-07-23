@@ -21,7 +21,6 @@ namespace api.Business.Queries
         }
         public async Task<GetAccountResult> Handle(GetAccount request, CancellationToken cancellationToken)
         {
-            ValidateData.PrintJson(request);
             if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
             {
                 throw new BadHttpRequestException($"Invalid Account");

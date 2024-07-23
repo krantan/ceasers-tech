@@ -1,8 +1,5 @@
 ﻿@page "/Guests"
 @model GuestsModel
-@{
-    var AccountId = ViewData["AccountId"]?.ToString() ?? "";
-}
 @using MediatR
 @using api.Business.Queries
 @inject IMediator Mediator

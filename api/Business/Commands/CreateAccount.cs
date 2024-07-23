@@ -43,7 +43,7 @@ namespace api.Business.Commands
         }
         public async Task<CreateAccountResult> Handle(CreateAccount request, CancellationToken cancellationToken)
         {
-            if (!Guid.TryParse(request.Id, out _))
+            if (!ValidateData.IsUuid(request.Id))
             {
                 request.Id = Guid.NewGuid().ToString();
             }

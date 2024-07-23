@@ -15,10 +15,10 @@ namespace api
             return (pos != -1);
         }
 
-        public static void PrintJson<T>(T obj)
+        public static void PrintJson<T>(T obj, string heading = "json")
         {
             var json = JsonSerializer.Serialize(obj);
-            Console.WriteLine(json);
+            Console.WriteLine($"{heading} {json}");
         }
     }
 }

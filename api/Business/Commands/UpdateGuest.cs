@@ -30,7 +30,6 @@ namespace api.Business.Commands
         }
         public Task Process(UpdateGuest request, CancellationToken cancellationToken)
         {
-            ValidateData.PrintJson(request);
             return Task.CompletedTask;
         }
     }
@@ -67,6 +66,8 @@ namespace api.Business.Commands
             {
                 throw new BadHttpRequestException($"Invalid Create Guest");
             }
+
+            guest.ModifiedTS = DateTime.UtcNow.ToString("o");
 
             _context.Guests.Update(guest);
 

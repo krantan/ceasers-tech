@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 using System.Data;
+using System.Globalization;
 using api.Business.Dtos;
 using api.Business.Commands;
 
@@ -20,42 +22,18 @@ namespace api.Business.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GuestContext).Assembly);
 
-            SeedData(modelBuilder);
-
             base.OnModelCreating(modelBuilder);
-        }
-
-        private static void SeedData(ModelBuilder modelBuilder)
-        {
-/*
-            modelBuilder.Entity<Account>()
-                .HasData(
-                    new Person
-                    {
-                        Id = 1,
-                        Username = "John Doe"
-                    },
-                    new Person
-                    {
-                        Id = 2,
-                        Name = "Jane Doe"
-                    },
-                    new Person
-                    {
-                        Id = 3,
-                        Name = "Duty Test"
-                    },
-                    new Person
-                    {
-                        Id = 4,
-                        Name = "Test Retired"
-                    }
-                );
-//*/
         }
 
         public static GuestInfo ReadGuest(Guest request)
         {
+            request.Phone = CryptData.Decrypt(request.Phone, request.Salt);
+
+            if (request.Phone.Length==10)
+            {
+                request.Phone = Regex.Replace(request.Phone, @"(\d{3})(\d{3})(\d{4})", "($1) $2-$3");
+            }
+
             return new GuestInfo()
             {
                 Id = request.Id,
@@ -67,7 +45,7 @@ namespace api.Business.Data
                 City = request.City,
                 State = request.State,
                 Zip = request.Zip,
-                Phone = CryptData.Decrypt(request.Phone, request.Salt),
+                Phone = request.Phone,
                 Salt = request.Salt
             };
         }
@@ -75,6 +53,16 @@ namespace api.Business.Data
         public static Guest WriteGuest(GuestInfo request)
         {
             request.Salt = CryptData.GenerateSalt();
+
+            var formats = new[] { "M/d/yyyy", "M/dd/yyyy", "MM/d/yyyy", "MM/dd/yyyy", "yyyy-MM-dd" };
+            DateTime dt;
+            if (DateTime.TryParseExact(request.BirthDate, formats, null, DateTimeStyles.None, out dt))
+            {
+                request.BirthDate = dt.ToString("d");
+            }
+
+            request.Zip = Regex.Replace(request.Phone, @"[^0-9]", "");
+            request.Phone = Regex.Replace(request.Phone, @"[^0-9\+]", "");
 
             return new Guest()
             {

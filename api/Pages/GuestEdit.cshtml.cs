@@ -19,7 +19,7 @@ public class GuestEditModel : PageModel
     public async Task<IActionResult> OnGet()
     {
         string AccountId = HttpContext.Session.GetString("AccountId") ?? "";
-        if (!string.IsNullOrEmpty(AccountId))
+        if (string.IsNullOrEmpty(AccountId))
         {
             return Redirect("/");
         }
@@ -30,7 +30,8 @@ public class GuestEditModel : PageModel
         });
         
         guest = result.Guest;
-        return new EmptyResult();
+
+        return Page();
     }
 }
 

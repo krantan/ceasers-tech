@@ -22,7 +22,8 @@ public class GuestsModel : PageModel
     public async Task<IActionResult> OnGet()
     {
         string AccountId = HttpContext.Session.GetString("AccountId") ?? "";
-        if (!string.IsNullOrEmpty(AccountId))
+
+        if (string.IsNullOrEmpty(AccountId))
         {
             return Redirect("/");
         }
@@ -30,12 +31,12 @@ public class GuestsModel : PageModel
         {
             SortType = ""
         });
-        if (result.Guests is not null)
+        if (result.Guests.Count > 0)
         {
             guests = result.Guests;
         }
 
-        return new EmptyResult();
+        return Page();
     }
 }
 
