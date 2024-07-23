@@ -22,7 +22,30 @@ namespace api.Business.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GuestContext).Assembly);
 
+            SeedData(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
+        }
+
+        private static void SeedData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>()
+                .HasData(
+                    new Account
+                    {
+                        Id = "1c6eca56-1cb9-4e7f-8d56-e9192bc8b9f0",
+                        Username = "usera@guestapi.com",
+                        Password = "eamUQMMyKM/kicXPv3H5/Lvh/ZopMdSuJeDCB7uvW/JtdeGcKIQWBUKgkPpZApOedGa2HPJe7n7oPC9So/wD3Q==",
+                        Salt = "yK8jjLPtHlyWOZWbKo8hdw=="
+                    },
+                    new Account
+                    {
+                        Id = "4849630d-685c-42cb-8bea-a71ee19f71ba",
+                        Username = "userb@guestapi.com",
+                        Password = "/q2GyDODzWB4gIcgZf/CXC8/GHk09bEjwLaumqBNrPl/YiRQLX3W92Njz63QqQu4XBlhdcZv5qDkztrlJXB7Iw==",
+                        Salt = "u6V9loynuzGEsRQ/97dJew=="
+                    }
+                );
         }
 
         public static GuestInfo ReadGuest(Guest request)
